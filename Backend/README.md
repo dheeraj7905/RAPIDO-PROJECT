@@ -443,3 +443,110 @@ Must be one of:
   },
   "token": "JWT_TOKEN_HERE"
 }
+
+
+# 🚖 Captain API Documentation
+
+## 📌 Overview
+This API provides authentication and profile management for captains (drivers). It includes login, profile retrieval, and logout functionality using JWT authentication.
+
+---
+
+## 🔐 1. Login Captain
+
+### Endpoint
+POST /captains/login
+
+### Description
+Authenticates a captain using email and password and returns a JWT token.
+
+### Request Body (JSON)
+{
+  "email": "captain@example.com",
+  "password": "123456"
+}
+
+### Validation Rules
+- Email: Must be valid
+- Password: Minimum 6 characters
+
+### Response
+{
+  "captain": {
+    "fullname": {
+      "firstname": "John",
+      "lastname": "Doe"
+    },
+    "email": "captain@example.com",
+    "vehicle": {
+      "color": "Black",
+      "plate": "UP16AB1234",
+      "capacity": 4,
+      "vehicleType": "Car"
+    }
+  },
+  "token": "JWT_TOKEN_HERE"
+}
+
+---
+
+## 👤 2. Get Captain Profile
+
+### Endpoint
+GET /captains/profile
+
+### Description
+Returns the profile of the currently authenticated captain.
+
+### Authentication
+Authorization: Bearer <token>
+
+### Response
+{
+  "captain": {
+    "fullname": {
+      "firstname": "John",
+      "lastname": "Doe"
+    },
+    "email": "captain@example.com",
+    "vehicle": {
+      "color": "Black",
+      "plate": "UP16AB1234",
+      "capacity": 4,
+      "vehicleType": "Car"
+    }
+  }
+}
+
+---
+
+## 🚪 3. Logout Captain
+
+### Endpoint
+GET /captains/logout
+
+### Description
+Logs out the captain and blacklists the JWT token.
+
+### Authentication
+Token required in header or cookie
+
+### Response
+{
+  "message": "Logout successfully"
+}
+
+---
+
+## ⚙️ Authentication Flow
+
+1. Login → get token  
+2. Use token in protected routes  
+3. Logout → token blacklisted  
+
+---
+
+## 🛠️ Notes
+- Store JWT securely  
+- Use middleware for protected routes  
+- Blacklist token after logout  
