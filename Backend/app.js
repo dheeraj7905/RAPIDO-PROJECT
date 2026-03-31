@@ -11,6 +11,7 @@ const connectDB=require('./db/db');
 connectDB();
 
 const userRoutes=require('./routes/user.routes');
+const captainRoutes=require('./routes/captain.routes'); 
 
 
 app.use(express.json());
@@ -23,5 +24,8 @@ app.get('/',(req,res)=>{
 });
 
 app.use('/users',userRoutes);
+
+
+app.use('/captains',captainRoutes);
 
 module.exports=app;

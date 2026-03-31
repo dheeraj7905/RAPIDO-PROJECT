@@ -307,3 +307,139 @@ router.get('/profile', authUser, async (req, res) => {
 ```
 
 ---
+# 🚪 User Logout API
+
+## 📌 Endpoint
+GET /users/logout
+
+---
+
+## 📖 Description
+This endpoint logs out the currently authenticated user by blacklisting the JWT token.  
+Once the token is blacklisted, it cannot be used again to access protected routes.
+
+---
+
+## 🔐 Authentication
+A valid JWT token is required.
+
+You can send the token in:
+
+### Authorization Header
+Authorization: Bearer <token>
+
+### OR Cookies
+token=<JWT_TOKEN>
+
+---
+
+## ⚙️ How It Works
+- Server receives the request
+- Extracts token from header or cookie
+- Stores token in blacklist database
+- Token becomes invalid for future use
+
+---
+
+## 📥 Request Example
+
+### Using Header
+GET /users/logout  
+Authorization: Bearer your_jwt_token_here  
+
+### Using Cookies
+GET /users/logout  
+Cookie: token=your_jwt_token_here  
+
+---
+
+## 📤 Response
+
+### ✅ Success
+```json
+{
+  "message": "Logged out successfully"
+}
+
+
+# 🚖 Captain Register API
+
+## 📌 Endpoint
+POST /captains/register
+
+---
+
+## 📖 Description
+This endpoint is used to register a new captain by creating a captain account with the provided details.
+
+---
+
+## 📨 Request Body
+Send data in **JSON format**:
+
+```json
+🧾## 🧾 Field Details
+
+### fullname (object)
+- `firstname` (string, required)  
+  - Minimum 3 characters  
+- `lastname` (string, optional)  
+  - Minimum 3 characters  
+
+### email (string, required)
+- Must be a valid email  
+- Must be unique  
+
+### password (string, required)
+- Minimum 6 characters  
+
+### vehicle (object)
+
+#### color (string, required)
+- Minimum 3 characters  
+
+#### plate (string, required)
+- Minimum 3 characters  
+
+#### capacity (number, required)
+- Minimum 1  
+
+#### vehicleType (string, required)
+Must be one of:
+- `car`
+- `motorcycle`
+- `auto`
+
+
+{
+  "fullname": {
+    "firstname": "Rohit",
+    "lastname": "Sharma"
+  },
+  "email": "rohit.driver@gmail.com",
+  "password": "password123",
+  "vehicle": {
+    "color": "Black",
+    "plate": "UP15AB1234",
+    "capacity": 4,
+    "vehicleType": "car"
+  }
+}
+
+## response(body) hai with the example
+{
+  "captain": {
+    "fullname": {
+      "firstname": "Rohit",
+      "lastname": "Sharma"
+    },
+    "email": "rohit.driver@gmail.com",
+    "vehicle": {
+      "color": "Black",
+      "plate": "UP15AB1234",
+      "capacity": 4,
+      "vehicleType": "car"
+    }
+  },
+  "token": "JWT_TOKEN_HERE"
+}
