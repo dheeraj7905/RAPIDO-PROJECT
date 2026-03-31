@@ -194,3 +194,116 @@ axios.post("/users/login", {
 Node.js | Express.js | MongoDB | Mongoose | JWT | Bcrypt
 
 ---
+
+
+# 👤 User Profile API
+
+## 📌 Endpoint
+
+`GET /users/profile`
+
+---
+
+## 🧾 Description
+
+Retrieves the profile information of the currently authenticated user.
+
+This endpoint returns the logged-in user's details. It requires a valid JWT token to access.
+
+---
+
+## 🔐 Authentication
+
+This route is protected and requires a valid JWT token.
+
+**Header Format:**
+
+```
+Authorization: Bearer <token>
+```
+
+---
+
+## 📥 Request
+
+### Headers
+
+| Key           | Value            |
+| ------------- | ---------------- |
+| Authorization | Bearer `<token>` |
+
+---
+
+## 📤 Response
+
+### ✅ Success Response (200 OK)
+
+```json
+{
+  "user": {
+    "fullname": {
+      "firstname": "Dheeraj",
+      "lastname": "Chauhan"
+    },
+    "email": "dheeraj@example.com"
+  }
+}
+```
+
+---
+
+## ❌ Error Responses
+
+### 401 Unauthorized
+
+* Token missing
+* Token invalid
+* Token blacklisted
+
+```json
+{
+  "message": "Unauthorized access"
+}
+```
+
+---
+
+## ⚙️ Backend Logic (Flow)
+
+1. Extract token from header or cookies
+2. Check if token exists
+3. Check if token is blacklisted
+4. Verify token using JWT secret
+5. Fetch user from database
+6. Return user profile data
+
+---
+
+## 🧠 Notes
+
+* Make sure middleware is used to protect the route
+* Token should not be expired
+* Blacklisted tokens should be denied access
+
+---
+
+## 🚀 Example Usage (cURL)
+
+```bash
+curl -X GET http://localhost:3000/users/profile \
+-H "Authorization: Bearer your_jwt_token"
+```
+
+---
+
+## 🛠️ Example Route (Express.js)
+
+```js
+router.get('/profile', authUser, async (req, res) => {
+    res.status(200).json({
+        user: req.user
+    });
+});
+```
+
+---
